@@ -1,0 +1,173 @@
+<div class="modal-header">
+    <h6 class="modal-title">Cadastrar novo Dispositivo</h6>
+    <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss()"></button>
+</div>
+<div class="modal-body">
+
+    <ul ngbNav #nav="ngbNav" [(activeId)]="active" class="nav-tabs">
+        <li [ngbNavItem]="1">
+            <button ngbNavLink>Dados</button>
+            <ng-template ngbNavContent>
+
+                <div class="card-body">
+                    <form [formGroup]="form">
+                        <div class="row">
+
+                            <app-input [control]="form.controls.description" [placeholder]="'Descrição'"
+                                class="col-md-12"></app-input>
+
+                            <app-input [control]="form.controls.url" [placeholder]="'URL'" [type]="'url'"
+                                class="col-md-12"></app-input>
+
+                            <app-input [control]="form.controls.manufacturer" [placeholder]="'Fabricante'"
+                                class="col-md-12"></app-input>
+
+
+
+                        </div>
+                    </form>
+                </div>
+
+            </ng-template>
+        </li>
+
+        <li [ngbNavItem]="2">
+            <button ngbNavLink>Parâmetros</button>
+            <ng-template ngbNavContent>
+
+                <div class="card-body">
+                    <form [formGroup]="parametersForm">
+                        <div class="row">
+
+                            <app-input [control]="parametersForm.controls.command" [placeholder]="'Comando'"
+                                class="col-md-12"></app-input>
+
+                            <p>Paramêtros: </p>
+
+                            <app-input [control]="parametersForm.controls.name" [placeholder]="'Nome'"
+                                class="col-md-4"></app-input>
+
+                            <app-input [control]="parametersForm.controls.description" [placeholder]="'Descrição'"
+                                class="col-md-6"></app-input>
+
+                            <button class="btn btn-sm btn-outline-primary col-md-1" (click)="addParameter()"
+                                style="margin-top: 23px;">
+                                <i class="fa-solid fa-square-plus"></i>
+                            </button>
+
+                        </div>
+                    </form>
+
+                    <table class="table table-striped" style="margin-top: 10px;">
+                        <thead>
+                            <tr>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of getParameters; track item.description; let i = $index) {
+                            <tr>
+                                <td>{{ item.description }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-danger" ngbTooltip="Excluir"
+                                        (click)="removeCommand(i)" style="margin-right: 3px;">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                            }
+                            <tr *ngIf="!getParameters?.length">
+
+                                <td colspan="3">
+                                    Nenhum parâmetro adicionado
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </ng-template>
+        </li>
+
+        <li [ngbNavItem]="3">
+            <button ngbNavLink>Comandos</button>
+            <ng-template ngbNavContent>
+
+                <div class="card-body">
+                    <form [formGroup]="commandForm">
+                        <div class="row">
+
+                            <p>Para adicionar um comando preencha os campos abaixo e clique em Adicionar</p>
+
+                            <app-input [control]="commandForm.controls.description" [placeholder]="'Descrição'"
+                                class="col-md-12"></app-input>
+
+                            <app-input [control]="commandForm.controls.operation" [placeholder]="'Operação'"
+                                class="col-md-4"></app-input>
+
+                            <app-input [control]="commandForm.controls.format" [placeholder]="'Definição'"
+                                class="col-md-4"></app-input>
+
+                            <app-input [control]="commandForm.controls.result" [placeholder]="'Resultado'"
+                                class="col-md-4"></app-input>
+
+                            <button class="btn btn-outline-primary col-md-3" (click)="addCommand()"
+                                style="margin-left: 15px;">
+                                <i class="fa-solid fa-square-plus"></i> Adicionar
+                            </button>
+
+                        </div>
+                    </form>
+
+                    <table class="table table-striped" style="margin-top: 10px;">
+                        <thead>
+                            <tr>
+                                <th scope="col">Descrição</th>
+                                <th scope="col">Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of getCommands; track item.description; let i = $index) {
+                            <tr>
+                                <td>{{ item.description }}</td>
+                                <td>
+                                    <button class="btn btn-sm btn-danger" ngbTooltip="Excluir"
+                                        (click)="removeCommand(i)" style="margin-right: 3px;">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+
+                                </td>
+                            </tr>
+                            }
+                            <tr *ngIf="!getCommands?.length">
+
+                                <td colspan="3">
+                                    Nenhum comando adicionado
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+
+                </div>
+
+            </ng-template>
+        </li>
+
+
+
+    </ul>
+
+    <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="activeModal.close()">Fechar</button>
+    <button type="button" class="btn btn-outline-success" (click)="save()">
+        <span class="fa fa-save"></span> Salvar
+    </button>
+</div>

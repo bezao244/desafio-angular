@@ -1,0 +1,14 @@
+<div class="form-group" style="margin-bottom: 5px;">
+    <label class="control-label " [ngClass]="isLabelRequired()">{{placeholder}}</label>
+    <input [type]="type" [placeholder]="placeholder" class="form-control" [formControl]="control"
+        [ngClass]="showError(control)" />
+</div>
+
+<style>
+    label.required:after {
+        content: "*";
+        font-weight: bold;
+        color: red;
+        margin-left: 3px;
+    }
+</style>
